@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.veterinaria.controlador.ClientesController">
+
+    <top>
+        <Label text="Gestión de Clientes y Mascotas" style="-fx-font-size: 20px; -fx-font-weight: bold;">
+            <BorderPane.margin>
+                <Insets top="16" right="16" bottom="8" left="16"/>
+            </BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <HBox spacing="20">
+            <BorderPane.margin>
+                <Insets top="8" right="16" bottom="16" left="16"/>
+            </BorderPane.margin>
+
+            <!-- ===== Panel Clientes ===== -->
+            <VBox spacing="10" prefWidth="420">
+                <Label text="Clientes" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                <GridPane hgap="8" vgap="6">
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoNombreCliente" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Apellido:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoApellidoCliente" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="DNI:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoDni" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoTelefono" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Correo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoCorreo" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <Button text="Guardar Cliente" onAction="#onGuardarCliente"/>
+
+                <TableView fx:id="tablaClientes" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="colApellido" text="Apellido" prefWidth="100"/>
+                        <TableColumn fx:id="colNombre" text="Nombre" prefWidth="100"/>
+                        <TableColumn fx:id="colDni" text="DNI" prefWidth="80"/>
+                        <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="110"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- ===== Panel Mascotas ===== -->
+            <VBox spacing="10" prefWidth="420">
+                <Label fx:id="labelClienteSeleccionado" text="Seleccioná un cliente"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                <GridPane hgap="8" vgap="6">
+                    <Label text="Ficha única:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoFichaUnica" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoNombreMascota" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Raza:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="campoRaza" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Especie:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="comboEspecie" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Nacimiento:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="fechaNacimientoMascota" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <Button text="Agregar Mascota" onAction="#onGuardarMascota"/>
+
+                <TableView fx:id="tablaMascotas" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="colFicha" text="Ficha" prefWidth="70"/>
+                        <TableColumn fx:id="colNombreMascota" text="Nombre" prefWidth="90"/>
+                        <TableColumn fx:id="colEspecie" text="Especie" prefWidth="80"/>
+                        <TableColumn fx:id="colRaza" text="Raza" prefWidth="90"/>
+                        <TableColumn fx:id="colEdad" text="Edad" prefWidth="50"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>

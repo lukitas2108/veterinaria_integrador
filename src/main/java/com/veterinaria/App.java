@@ -17,9 +17,9 @@ public class App extends Application {
     @Override
     public void start(Stage stagePrincipal) throws IOException {
         Parent raiz = FXMLLoader.load(
-                getClass().getResource("/com/veterinaria/vista/main-view.fxml"));
+                getClass().getResource("/com/veterinaria/vista/clientes-view.fxml"));
 
-        Scene escena = new Scene(raiz, 900, 600);
+        Scene escena = new Scene(raiz, 950, 650);
 
         stagePrincipal.setTitle("Sistema de Gestión Veterinaria");
         stagePrincipal.setScene(escena);
