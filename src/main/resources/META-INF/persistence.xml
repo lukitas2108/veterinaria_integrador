@@ -9,7 +9,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- A medida que se vayan creando las entidades JPA, se agregan acá con <class>. -->
-        <!-- Ejemplo: <class>com.veterinaria.modelo.Cliente</class> -->
+        <class>com.veterinaria.modelo.Cliente</class>
+        <class>com.veterinaria.modelo.Mascota</class>
 
         <properties>
             <!-- H2 en modo archivo: los datos persisten entre ejecuciones en ./data/veterinaria.mv.db -->
