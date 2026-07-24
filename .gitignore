@@ -1,0 +1,17 @@
+# Maven
+target/
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# Base de datos H2 embebida (cada uno corre con su propia copia local)
+data/
+
+# SO
+.DS_Store
+Thumbs.db
