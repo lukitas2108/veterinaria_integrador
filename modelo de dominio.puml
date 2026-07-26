@@ -1,0 +1,148 @@
+@startuml
+' Dirección: top to bottom (vertical) - por defecto
+' left to right (horizontal)
+left to right direction
+
+' === ENUM ===
+enum EstadoTurno {
+    PENDIENTE_CONFIRMACION
+    CONFIRMADO
+    ATENDIDO
+    CANCELADO
+}
+
+' === INTERFAZ ===
+interface Facturable {
+    + getPrecioBase(): BigDecimal
+    + getDuracionMinutos(): int
+}
+
+' === CLASES ===
+class Cliente {
+    + apellido: String
+    + nombre: String
+    + telefono: String
+    + correoElectronico: String
+    + dni: Integer
+    + activo: boolean
+}
+
+class Mascota {
+    + nombre: String
+    + fichaUnica: Long
+    + fechaNacimiento: LocalDate
+    + activo: boolean
+    + tieneTurnosSolapados(nuevoTurno: Turno): Boolean
+    + getUltimoRegistroVacunacion(tipoVacuna: TipoVacuna): Optional<RegistroVacunacion>
+}
+
+class Raza {
+    + nombreRaza: String
+}
+
+class Especie {
+    + nombreEspecie: String
+}
+
+class Veterinario {
+    + matricula: String
+    + apellido: String
+    + nombre: String
+    + correoElectronico: String
+    + tieneTurnosSolapados(nuevoTurno: Turno): Boolean
+}
+
+class Especialidad {
+    + nombre: String
+    + descripcion: String
+}
+
+class TipoVacuna {
+    + nombreComercial: String
+    + periodicidadMeses: Integer
+    + enfermedadPreviene: String
+}
+
+class RegistroVacunacion {
+    + fechaAplicacion: LocalDate
+    + fechaCaducidad: LocalDate
+    + estaVigente(fechaActual: LocalDate): Boolean
+    + diasRestantes(fechaActual: LocalDate): Integer
+    + estaVencida(fechaActual: LocalDate): Boolean
+}
+
+abstract class Servicio {
+    + nombreDescriptivo: String
+    + duracionMinutos: int
+    + precioBase: BigDecimal
+    + requiereHistorial: boolean
+    + getPrecioBase(): BigDecimal
+    + getDuracionMinutos(): int
+    + requiereHistorial(): boolean
+}
+
+class ConsultaMedicaServicio {
+    + diagnostico: String
+    + tratamiento: String
+}
+
+class VacunacionServicio {
+    + sePuedeAplicar(mascota: Mascota, fechaActual: LocalDate): Boolean
+    + getTipoVacuna(): TipoVacuna
+}
+
+class PeluqueriaServicio {
+    + notas: String
+    + productosUsados: String[*]
+}
+
+class GuarderiaServicio {
+    + cupoDiarioMaximo: Integer
+    + hayCupoDisponible(fecha: LocalDate, turnosOcupadosEnFecha: Integer): Boolean
+}
+
+class DetalleTurnoServicio {
+    + precioAplicado: BigDecimal
+    + duracionAplicada: Integer
+    + orden: Integer
+    + getSubtotal(): BigDecimal
+}
+
+class Turno {
+    + fechaHoraInicio: LocalDateTime
+    + fechaHoraFin: LocalDateTime
+    + fechaSolicitud: LocalDateTime
+    + estado: EstadoTurno
+    + puedeCancelar(fechaActual: LocalDateTime): Boolean
+    + cancelar(fechaActual: LocalDateTime): void
+    + confirmar(): void
+    + atender(): void
+    + calcularPrecioTotal(): BigDecimal
+    + calcularDuracionTotal(): Integer
+    + agregarServicio(servicio: Servicio, precioAplicado: BigDecimal): void
+    + estaOcupado(fechaHora: LocalDateTime): Boolean
+}
+
+' === RELACIONES ===
+Cliente "1" -- "*" Mascota : tiene
+Mascota "*" -- "1" Raza : tieneRaza
+Raza "*" -- "1" Especie : perteneceAEspecie
+Veterinario "*" -- "*" Especialidad : tieneEspecialidades
+Veterinario "1" -- "*" Turno : atiendeEn
+Mascota "1" -- "*" Turno : participaEn
+Turno "1" *-- "1..*" DetalleTurnoServicio : incluye
+DetalleTurnoServicio "*" -- "1" Servicio : refiereA
+Turno "1" *-- "0..*" RegistroVacunacion : genera
+Mascota "1" -- "*" RegistroVacunacion : tieneHistorialVacunacion
+RegistroVacunacion "*" -- "1" TipoVacuna : correspondeA
+VacunacionServicio "1" -- "1" TipoVacuna : aplicaVacuna
+Turno ..> EstadoTurno : usa
+
+' === HERENCIA E INTERFACES ===
+Servicio .up.|> Facturable
+Servicio <|-- ConsultaMedicaServicio
+Servicio <|-- VacunacionServicio
+Servicio <|-- PeluqueriaServicio
+Servicio <|-- GuarderiaServicio
+
+@enduml
